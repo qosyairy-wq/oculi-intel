@@ -1,0 +1,74 @@
+# OCULI vulnerability-intelligence publisher.
+# Builds a signed snapshot from the complete NVD feed + CISA KEV + CVE Program
+# records once a day and publishes it as the repository's latest release.
+# OCULI endpoints check  https://github.com/<owner>/<repo>/releases/latest/download/manifest.json
+# every 6 hours and download oculi-intel.zip only when it is newer.
+name: Publish OCULI intelligence
+
+on:
+  schedule:
+    - cron: "17 22 * * *" # 06:17 Malaysia time, daily
+  workflow_dispatch: {}
+
+permissions:
+  contents: write # create releases
+
+concurrency:
+  group: publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.23"
+
+      - name: Build the builder
+        run: go build -trimpath -o oib ./cmd/oculi-intel-builder
+
+      - name: Download inputs
+        run: |
+          set -euo pipefail
+          mkdir -p in
+          # Complete NVD API 2.0 feed (fkie-cad mirror, rebuilt daily from the NVD API)
+          curl -fsSL --retry 3 -o in/CVE-all.json.xz https://github.com/fkie-cad/nvd-json-data-feeds/releases/latest/download/CVE-all.json.xz
+          xz -d in/CVE-all.json.xz
+          # CISA Known Exploited Vulnerabilities (official feed)
+          curl -fsSL --retry 3 -o in/kev.json https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json
+          ls -la in
+
+      - name: Build and sign
+        env:
+          OCULI_SIGNING_KEY: ${{ secrets.OCULI_SIGNING_KEY }}
+        run: |
+          set -euo pipefail
+          umask 077
+          printf '%s\n' "$OCULI_SIGNING_KEY" > signing.key
+          ./oib build -mode nvd-feed -nvd-feed in/CVE-all.json \
+            -kev in/kev.json -epss off -cve5 trusted -workers 16 \
+            -nvd-record-url 'https://raw.githubusercontent.com/fkie-cad/nvd-json-data-feeds/main/CVE-{year}/{nvdbucket}/{id}.json' \
+            -cve5-url 'https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/{year}/{cve5bucket}/{id}.json' \
+            -test -key signing.key -out snap
+          rm -f signing.key
+          ./oib verify -dir snap -pub keys/signing.pub
+          cp snap/manifest.json manifest.json
+          cp snap.oculi-intel.zip oculi-intel.zip
+          echo "SNAP_ID=$(python3 -c 'import json;print(json.load(open("manifest.json"))["snapshotId"])')" >> "$GITHUB_ENV"
+
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh release create "$SNAP_ID" manifest.json oculi-intel.zip \
+            --title "$SNAP_ID" --notes "Signed OCULI intelligence snapshot built from NVD (via fkie-cad mirror), CISA KEV and CVE Program records. This product uses the NVD API but is not endorsed or certified by the NVD." \
+            --latest
+          # keep the 7 most recent releases
+          gh release list --limit 100 --json tagName --jq '.[7:][].tagName' | while read -r tag; do
+            gh release delete "$tag" --yes --cleanup-tag
+          done
