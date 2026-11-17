@@ -1,0 +1,341 @@
+{
+  "version": "2026.11.17-test3",
+  "notes": "Curated Windows software identity catalog. Every CPE vendor:product below was verified against real NVD / CVE Program records on 2026-11-17 (see docs/04-SOFTWARE-MAPPING-COVERAGE.md). Name patterns are matched case-insensitively against the registry DisplayName; publisher patterns against Publisher. A product that matches no entry, or more than one, is UNMAPPED.",
+  "entries": [
+    {
+      "id": "google-chrome", "name": "Google Chrome",
+      "names": ["^google chrome$"],
+      "exclude": ["remote desktop", "beta", "dev$", "canary"],
+      "publishers": ["^google llc$", "^google inc\\.?$", "^google$"],
+      "cpes": [{"part": "a", "vendor": "google", "product": "chrome"}],
+      "cna": [{"vendor": "google", "product": "chrome"}], "cnaTrust": "fallback"
+    },
+    {
+      "id": "microsoft-edge", "name": "Microsoft Edge (Chromium)",
+      "names": ["^microsoft edge$"],
+      "exclude": ["webview", "update", "beta", "dev$", "canary"],
+      "publishers": ["^microsoft corporation$"],
+      "cpes": [{"part": "a", "vendor": "microsoft", "product": "edge_chromium"}, {"part": "a", "vendor": "microsoft", "product": "edge"}],
+      "cna": [{"vendor": "microsoft", "product": "microsoft edge (chromium-based)"}], "cnaTrust": "primary",
+      "notes": "NVD uses both edge_chromium and edge for Chromium Edge. Microsoft (MSRC) is the CNA and is the primary source."
+    },
+    {
+      "id": "mozilla-firefox", "name": "Mozilla Firefox",
+      "names": ["^mozilla firefox\\b"],
+      "exclude": ["\\besr\\b", "maintenance service", "developer edition", "nightly"],
+      "publishers": ["^mozilla$", "^mozilla corporation$"],
+      "versionFrom": "displayVersion",
+      "cpes": [{"part": "a", "vendor": "mozilla", "product": "firefox", "shared": true}],
+      "swEdition": "-",
+      "cna": [{"vendor": "mozilla", "product": "firefox"}], "cnaTrust": "crosscheck",
+      "notes": "Release channel. NVD marks release Firefox with sw_edition '-' and ESR with 'esr'."
+    },
+    {
+      "id": "mozilla-firefox-esr", "name": "Mozilla Firefox ESR",
+      "names": ["^mozilla firefox\\b.*\\besr\\b"],
+      "exclude": ["maintenance service"],
+      "publishers": ["^mozilla$", "^mozilla corporation$"],
+      "cpes": [{"part": "a", "vendor": "mozilla", "product": "firefox", "shared": true}, {"part": "a", "vendor": "mozilla", "product": "firefox_esr"}],
+      "swEdition": "esr",
+      "cna": [{"vendor": "mozilla", "product": "firefox esr"}], "cnaTrust": "crosscheck"
+    },
+    {
+      "id": "mozilla-thunderbird", "name": "Mozilla Thunderbird",
+      "names": ["^mozilla thunderbird\\b"],
+      "publishers": ["^mozilla$", "^mozilla corporation$"],
+      "cpes": [{"part": "a", "vendor": "mozilla", "product": "thunderbird"}],
+      "cna": [{"vendor": "mozilla", "product": "thunderbird"}], "cnaTrust": "crosscheck"
+    },
+    {
+      "id": "7-zip", "name": "7-Zip",
+      "names": ["^7-zip\\b"],
+      "exclude": ["zstandard", "zstd", "\\bzs\\b"],
+      "publishers": ["^igor pavlov$"],
+      "cpes": [{"part": "a", "vendor": "7-zip", "product": "7-zip"}],
+      "cna": [{"vendor": "7-zip", "product": "7-zip"}], "cnaTrust": "fallback",
+      "notes": "Forks (7-Zip ZS) have different publishers and are excluded."
+    },
+    {
+      "id": "winrar", "name": "WinRAR",
+      "names": ["^winrar\\b"],
+      "exclude": ["shellextension", "shell extension", "^winrar\\."],
+      "publishers": ["^win\\.rar gmbh$", "^alexander roshal$", "^rarlab$"],
+      "cpes": [{"part": "a", "vendor": "rarlab", "product": "winrar"}],
+      "cnaTrust": "fallback"
+    },
+    {
+      "id": "notepad-plus-plus", "name": "Notepad++",
+      "names": ["^notepad\\+\\+"],
+      "publishers": ["^notepad\\+\\+ team$", "^don ho$"],
+      "cpes": [{"part": "a", "vendor": "notepad-plus-plus", "product": "notepad++"}],
+      "cna": [{"vendor": "notepad-plus-plus", "product": "notepad-plus-plus"}], "cnaTrust": "fallback"
+    },
+    {
+      "id": "putty", "name": "PuTTY",
+      "names": ["^putty release\\b", "^putty\\b"],
+      "exclude": ["kitty", "putty ng", "puttygen only"],
+      "publishers": ["^simon tatham$"],
+      "cpes": [{"part": "a", "vendor": "putty", "product": "putty"}],
+      "cnaTrust": "fallback"
+    },
+    {
+      "id": "winscp", "name": "WinSCP",
+      "names": ["^winscp\\b"],
+      "publishers": ["^martin prikryl$"],
+      "cpes": [{"part": "a", "vendor": "winscp", "product": "winscp"}],
+      "cnaTrust": "fallback"
+    },
+    {
+      "id": "filezilla-client", "name": "FileZilla Client",
+      "names": ["^filezilla\\b"],
+      "exclude": ["server"],
+      "publishers": ["^tim kosse$", "^filezilla project$"],
+      "cpes": [{"part": "a", "vendor": "filezilla-project", "product": "filezilla_client"}],
+      "cnaTrust": "fallback"
+    },
+    {
+      "id": "vlc", "name": "VLC media player",
+      "names": ["^vlc media player\\b"],
+      "publishers": ["^videolan$"],
+      "cpes": [{"part": "a", "vendor": "videolan", "product": "vlc_media_player"}],
+      "cnaTrust": "fallback"
+    },
+    {
+      "id": "git-for-windows", "name": "Git for Windows",
+      "names": ["^git$", "^git version [0-9][0-9.]*$"],
+      "publishers": ["^the git development community$"],
+      "versionRegex": "^([0-9]+\\.[0-9]+\\.[0-9]+)",
+      "cpes": [{"part": "a", "vendor": "git-scm", "product": "git"}, {"part": "a", "vendor": "git", "product": "git"}, {"part": "a", "vendor": "git_for_windows_project", "product": "git_for_windows"}],
+      "cnaTrust": "fallback",
+      "notes": "Git CVEs are published under git-scm:git and git:git; Windows-specific ones under git_for_windows_project:git_for_windows. The version is the upstream Git version (the '.windows.N' suffix is dropped)."
+    },
+    {
+      "id": "wireshark", "name": "Wireshark",
+      "names": ["^wireshark\\b"],
+      "publishers": ["^the wireshark developer community"],
+      "cpes": [{"part": "a", "vendor": "wireshark", "product": "wireshark"}],
+      "cnaTrust": "fallback"
+    },
+    {
+      "id": "keepass", "name": "KeePass Password Safe",
+      "names": ["^keepass password safe\\b"],
+      "exclude": ["keepassxc"],
+      "publishers": ["^dominik reichl$"],
+      "cpes": [{"part": "a", "vendor": "keepass", "product": "keepass"}],
+      "cnaTrust": "fallback"
+    },
+    {
+      "id": "teamviewer", "name": "TeamViewer (full client)",
+      "names": ["^teamviewer$", "^teamviewer [0-9]+$"],
+      "exclude": ["host", "meeting", "qs"],
+      "publishers": ["^teamviewer$", "^teamviewer germany gmbh$", "^teamviewer gmbh$"],
+      "cpes": [{"part": "a", "vendor": "teamviewer", "product": "teamviewer"}, {"part": "a", "vendor": "teamviewer", "product": "full_client"}],
+      "cna": [{"vendor": "teamviewer", "product": "remote full client"}], "cnaTrust": "fallback"
+    },
+    {
+      "id": "anydesk", "name": "AnyDesk",
+      "names": ["^anydesk$"],
+      "publishers": ["^anydesk software gmbh$", "^philandro software gmbh$"],
+      "cpes": [{"part": "a", "vendor": "anydesk", "product": "anydesk"}],
+      "cnaTrust": "fallback"
+    },
+    {
+      "id": "zoom", "name": "Zoom Workplace / Zoom Meetings client",
+      "names": ["^zoom workplace\\b", "^zoom\\s*\\((64|32)[ -]?bit\\)$", "^zoom$"],
+      "exclude": ["outlook", "plugin", "rooms", "vdi", "sdk"],
+      "publishers": ["^zoom video communications, inc\\.?$", "^zoom communications, inc\\.?$"],
+      "versionRegex": "^([0-9]+\\.[0-9]+\\.[0-9]+)\\s*\\([0-9]+\\)$",
+      "cpes": [{"part": "a", "vendor": "zoom", "product": "zoom"}],
+      "cnaTrust": "fallback",
+      "notes": "Registry DisplayVersion on a real endpoint is 'x.y.z (build)', e.g. '5.17.11 (34827)'; x.y.z is the release version used in NVD ranges (verified on CVE-2024-24691, CVE-2023-39214: zoom:zoom target_sw windows). Any other DisplayVersion format leaves the version uninterpreted (UNKNOWN). Rooms, VDI clients and the SDK are separate CPEs and are excluded."
+    },
+    {
+      "id": "vscode", "name": "Microsoft Visual Studio Code",
+      "names": ["^microsoft visual studio code\\b"],
+      "exclude": ["insiders"],
+      "publishers": ["^microsoft corporation$"],
+      "cpes": [{"part": "a", "vendor": "microsoft", "product": "visual_studio_code"}],
+      "cnaTrust": "fallback"
+    },
+    {
+      "id": "python", "name": "Python (CPython)",
+      "names": ["^python [0-9]+\\.[0-9]+\\.[0-9]+(?:(?:a|b|rc)[0-9]+)? \\((?:64|32)-bit\\)$", "^python [0-9]+\\.[0-9]+\\.[0-9]+(?:(?:a|b|rc)[0-9]+)?$"],
+      "publishers": ["^python software foundation$"],
+      "versionFrom": "name", "versionRegex": "^python ([0-9]+\\.[0-9]+\\.[0-9]+(?:(?:a|b|rc)[0-9]+)?)(?: |$)",
+      "cpes": [{"part": "a", "vendor": "python", "product": "python"}, {"part": "a", "vendor": "python", "product": "cpython"}],
+      "cna": [{"vendor": "python software foundation", "product": "cpython"}], "cnaTrust": "crosscheck",
+      "notes": "Windows installer DisplayVersion encodes a build number (e.g. 3.12.4150.0); the version is read from the display name."
+    },
+    {
+      "id": "nodejs", "name": "Node.js",
+      "names": ["^node\\.js$"],
+      "publishers": ["^node\\.js foundation$", "^openjs foundation$"],
+      "cpes": [{"part": "a", "vendor": "nodejs", "product": "node.js"}],
+      "ignoreSwEdition": true,
+      "cna": [{"vendor": "nodejs", "product": "node"}], "cnaTrust": "fallback",
+      "notes": "NVD tags some Node.js release lines 'lts' and others '-' inconsistently; ranges are per major line, so sw_edition is not used to discriminate."
+    },
+    {
+      "id": "adobe-acrobat", "name": "Adobe Acrobat (Reader or Pro)",
+      "names": ["^adobe acrobat(?: dc)?(?: \\((?:64|32)-bit\\))?$", "^adobe acrobat - 64-bit$"],
+      "exclude": ["reader"],
+      "publishers": ["^adobe( systems)?( incorporated| inc\\.?)?$"],
+      "cpeMode": "ambiguous",
+      "cpes": [{"part": "a", "vendor": "adobe", "product": "acrobat_dc", "swEdition": "continuous"}, {"part": "a", "vendor": "adobe", "product": "acrobat_reader_dc", "swEdition": "continuous"}, {"part": "a", "vendor": "adobe", "product": "acrobat", "swEdition": "classic"}, {"part": "a", "vendor": "adobe", "product": "acrobat_reader", "swEdition": "classic"}],
+      "swEditionFromVersion": "adobe-track",
+      "cnaTrust": "fallback",
+      "notes": "The unified 'Adobe Acrobat' installer may be Reader or Pro; results must agree across both CPEs, otherwise POTENTIALLY_AFFECTED. Track derived from version: third part 2xxxx = Continuous, 3xxxx = Classic."
+    },
+    {
+      "id": "adobe-acrobat-reader", "name": "Adobe Acrobat Reader",
+      "names": ["^adobe acrobat reader\\b", "^adobe reader\\b"],
+      "publishers": ["^adobe( systems)?( incorporated| inc\\.?)?$"],
+      "cpes": [{"part": "a", "vendor": "adobe", "product": "acrobat_reader_dc", "swEdition": "continuous"}, {"part": "a", "vendor": "adobe", "product": "acrobat_reader", "swEdition": "classic"}],
+      "swEditionFromVersion": "adobe-track",
+      "cnaTrust": "fallback"
+    },
+    {
+      "id": "libreoffice", "name": "LibreOffice",
+      "names": ["^libreoffice [0-9]", "^libreoffice$"],
+      "exclude": ["help pack", "sdk"],
+      "publishers": ["^the document foundation$"],
+      "cpes": [{"part": "a", "vendor": "libreoffice", "product": "libreoffice"}],
+      "cnaTrust": "fallback"
+    },
+    {
+      "id": "gimp", "name": "GIMP",
+      "names": ["^gimp [0-9]", "^gimp$"],
+      "publishers": ["^the gimp team$"],
+      "cpes": [{"part": "a", "vendor": "gimp", "product": "gimp"}],
+      "cnaTrust": "fallback"
+    },
+    {
+      "id": "virtualbox", "name": "Oracle VirtualBox",
+      "names": ["^oracle vm virtualbox\\b", "^oracle virtualbox\\b"],
+      "exclude": ["extension pack", "guest additions"],
+      "publishers": ["^oracle corporation$"],
+      "cpes": [{"part": "a", "vendor": "oracle", "product": "vm_virtualbox"}],
+      "cnaTrust": "fallback"
+    },
+    {
+      "id": "docker-desktop", "name": "Docker Desktop",
+      "names": ["^docker desktop$"],
+      "publishers": ["^docker inc\\.?$"],
+      "cpes": [{"part": "a", "vendor": "docker", "product": "desktop"}],
+      "cna": [{"vendor": "docker", "product": "docker desktop"}], "cnaTrust": "fallback"
+    },
+    {
+      "id": "openvpn-community", "name": "OpenVPN (Community)",
+      "names": ["^openvpn [0-9]+\\.[0-9]+\\.[0-9]+"],
+      "exclude": ["connect", "gui"],
+      "publishers": ["^openvpn,? inc\\.?$", "^openvpn technologies,? inc\\.?$"],
+      "versionFrom": "name", "versionRegex": "^openvpn ([0-9]+\\.[0-9]+\\.[0-9]+)",
+      "cpes": [{"part": "a", "vendor": "openvpn", "product": "openvpn"}],
+      "swEdition": "community",
+      "cnaTrust": "fallback"
+    },
+    {
+      "id": "dotnet-runtime", "name": "Microsoft .NET Runtime",
+      "names": ["^microsoft \\.net runtime - [0-9]+\\.[0-9]+\\.[0-9]+", "^microsoft windows desktop runtime - [0-9]+\\.[0-9]+\\.[0-9]+"],
+      "exclude": ["preview", " rc"],
+      "publishers": ["^microsoft corporation$"],
+      "versionFrom": "name", "versionRegex": "runtime - ([0-9]+\\.[0-9]+\\.[0-9]+)",
+      "cpes": [{"part": "a", "vendor": "microsoft", "product": ".net"}],
+      "cnaTrust": "fallback",
+      "notes": "Several runtime majors can be installed side by side; each is a separate inventory row."
+    },
+    {
+      "id": "aspnetcore", "name": "Microsoft ASP.NET Core Shared Framework",
+      "names": ["^microsoft asp\\.net core [0-9]+\\.[0-9]+\\.[0-9]+ - shared framework"],
+      "exclude": ["preview", " rc"],
+      "publishers": ["^microsoft corporation$"],
+      "versionFrom": "name", "versionRegex": "core ([0-9]+\\.[0-9]+\\.[0-9]+) -",
+      "cpes": [{"part": "a", "vendor": "microsoft", "product": "asp.net_core"}],
+      "cnaTrust": "fallback"
+    },
+    {
+      "id": "vmware-workstation", "name": "VMware Workstation",
+      "names": ["^vmware workstation$", "^vmware workstation pro$"],
+      "exclude": ["player"],
+      "publishers": ["^vmware,? inc\\.?$", "^broadcom( inc\\.?)?$"],
+      "cpes": [{"part": "a", "vendor": "vmware", "product": "workstation"}],
+      "cnaTrust": "fallback",
+      "notes": "Verified on CVE-2025-22224/22226 (CISA KEV) and CVE-2024-22267. Non-numeric release names (e.g. 25H2u1) in future records evaluate as UNKNOWN."
+    },
+    {
+      "id": "globalprotect", "name": "Palo Alto Networks GlobalProtect app",
+      "names": ["^globalprotect$"],
+      "publishers": ["^palo alto networks$"],
+      "cpes": [{"part": "a", "vendor": "paloaltonetworks", "product": "globalprotect"}],
+      "cnaTrust": "fallback",
+      "notes": "Verified on CVE-2024-5915 (target_sw windows). PAN-OS (firewall) CVEs use a different CPE and are not attributed to the client."
+    },
+    {
+      "id": "tenable-nessus", "name": "Tenable Nessus",
+      "names": ["^tenable nessus\\b", "^nessus$"],
+      "exclude": ["agent"],
+      "publishers": ["^tenable,? inc\\.?$", "^tenable network security"],
+      "versionRegex": "^([0-9]+\\.[0-9]+\\.[0-9]+)",
+      "cpes": [{"part": "a", "vendor": "tenable", "product": "nessus"}],
+      "cnaTrust": "fallback",
+      "notes": "DisplayVersion carries a build (10.7.1.20016); only x.y.z is compared, otherwise 10.7.1.20016 would sort above an inclusive end of 10.7.1. Nessus Agent is a separate CPE and is excluded. Verified on CVE-2023-0101."
+    },
+    {
+      "id": "foxit-pdf-editor", "name": "Foxit PDF Editor",
+      "names": ["^foxit pdf editor\\b", "^foxit phantompdf\\b"],
+      "exclude": ["reader"],
+      "publishers": ["^foxit software (inc\\.?|incorporated)$"],
+      "cpes": [{"part": "a", "vendor": "foxit", "product": "pdf_editor"}],
+      "cnaTrust": "fallback",
+      "notes": "NVD ranges use the full four-part version (e.g. 12.1.1.15289), matching DisplayVersion. Verified on CVE-2023-27363."
+    },
+    {
+      "id": "brave", "name": "Brave Browser",
+      "names": ["^brave$"],
+      "exclude": ["beta", "nightly", "dev$"],
+      "publishers": ["^brave software,? inc\\.?$"],
+      "versionRegex": "^[0-9]+\\.([0-9]+\\.[0-9]+\\.[0-9]+)$",
+      "cpes": [{"part": "a", "vendor": "brave", "product": "brave"}],
+      "cnaTrust": "fallback",
+      "notes": "Windows DisplayVersion is '<Chromium major>.<Brave version>' (e.g. 157.1.99.57 = Brave 1.99.57); NVD ranges use the Brave version (CVE-2023-28360: before 1.48.171). Chromium-engine CVEs filed only against Google Chrome are not attributed to Brave."
+    },
+    {
+      "id": "openssl-light", "name": "OpenSSL (Shining Light Win32/Win64 installer)",
+      "names": ["^openssl light [0-9]", "^win(32|64) openssl v[0-9]", "^openssl [0-9]+\\.[0-9]+\\.[0-9]+ \\((32|64)-bit\\)$"],
+      "publishers": ["^shining light productions$"],
+      "versionRegex": "^([0-9]+\\.[0-9]+\\.[0-9]+[a-z]{0,2})$",
+      "scheme": "openssl",
+      "cpes": [{"part": "a", "vendor": "openssl", "product": "openssl"}],
+      "cnaTrust": "fallback",
+      "notes": "Only the standalone OpenSSL installation is mapped; OpenSSL copies bundled inside other applications are not inventoried. Uses the openssl version scheme so letter patch levels (1.0.1g, 1.1.1w, 0.9.8za) compare correctly. CPE verified on CVE-2014-0160."
+    },
+    {
+      "id": "wazuh-agent", "name": "Wazuh Agent",
+      "names": ["^wazuh agent$"],
+      "publishers": ["^wazuh,? inc\\.?$"],
+      "cpes": [{"part": "a", "vendor": "wazuh", "product": "wazuh"}],
+      "applicability": "unsupported",
+      "unsupportedReason": "NVD uses one CPE (wazuh:wazuh) for both the Wazuh server and the agent, and most Wazuh CVEs (e.g. CVE-2025-24016, CISA KEV) affect only the server. Applying them to the agent would produce false findings, so agent applicability cannot be determined automatically.",
+      "cnaTrust": "fallback"
+    },
+    {
+      "id": "microsoft-365-apps", "name": "Microsoft 365 Apps / Office",
+      "names": ["^microsoft 365\\b", "^microsoft office (professional|standard|home|365|ltsc)", "^microsoft office [0-9]{4}\\b"],
+      "exclude": ["language pack", "proofing", "click-to-run extensibility", "click-to-run licensing"],
+      "publishers": ["^microsoft corporation$"],
+      "cpes": [{"part": "a", "vendor": "microsoft", "product": "365_apps"}, {"part": "a", "vendor": "microsoft", "product": "office"}, {"part": "a", "vendor": "microsoft", "product": "office_long_term_servicing_channel"}],
+      "applicability": "unsupported",
+      "unsupportedReason": "NVD records for Office/365 Apps carry no version ranges (version '-'); Microsoft's fixed builds per update channel are not yet ingested, so patch state cannot be determined.",
+      "cnaTrust": "fallback"
+    },
+    {
+      "id": "oracle-java", "name": "Oracle Java SE (JRE/JDK)",
+      "names": ["^java [0-9]+ update [0-9]+", "^java\\(tm\\) se development kit", "^java se development kit"],
+      "publishers": ["^oracle corporation$", "^oracle america, inc\\.?$"],
+      "cpes": [{"part": "a", "vendor": "oracle", "product": "jre"}, {"part": "a", "vendor": "oracle", "product": "jdk"}],
+      "applicability": "unsupported",
+      "unsupportedReason": "NVD lists Oracle Java applicability as individual update releases (e.g. 1.8.0 update361) that represent 'this and earlier' in Oracle's CPU advisories; evaluating them literally would produce false NOT_AFFECTED results.",
+      "cnaTrust": "fallback"
+    }
+  ]
+}
